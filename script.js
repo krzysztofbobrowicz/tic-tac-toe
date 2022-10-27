@@ -5,6 +5,7 @@ const createPlayer = (playerName, playerMarker) => {
 // gameboard object
 const gameBoard = (() => {
   // generate board array
+  let gameBoardDiv = document.querySelector('#game-board');
 
   let board = [];
   for (let i = 0; i < 9; i++) {
@@ -12,12 +13,14 @@ const gameBoard = (() => {
   }
 
   // create game board
-  let gameBoardDiv = document.querySelector('#game-board');
-  board.forEach(() => {
-    const square = document.createElement('div');
-    square.className = 'cell';
-    gameBoardDiv.appendChild(square);
-  });
+  function createGameBoard() {
+    board.forEach(() => {
+      const square = document.createElement('div');
+      square.className = 'cell';
+      gameBoardDiv.appendChild(square);
+    });
+  }
+  createGameBoard();
 
   // Place markers on board
   Array.from(gameBoardDiv.children).forEach((square, index) => {
@@ -35,8 +38,7 @@ const gameBoard = (() => {
       }
     });
   });
-
-  return { board };
+  return { board, createGameBoard };
 })();
 
 // game object
@@ -74,9 +76,16 @@ const game = (() => {
         gameBoard.board[item[2]] == this.activePlayer.playerMarker
       ) {
         this.winnerDeclared = !winnerDeclared;
-        console.log('the winner is ' + this.activePlayer.playerName);
+        document.querySelector(
+          '#winningMessageText'
+        ).innerText = `The winner is ${this.activePlayer.playerName}`;
       }
     });
+
+    // Declare a draw
+    if (this.remainingSpots <= 0) {
+      document.querySelector('#winningMessageText').innerText = `Draw.`;
+    }
   }
 
   return {

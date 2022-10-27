@@ -9,19 +9,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  background-color: lightblue;
 }
 
 #game-board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
-  grid-gap: 1em;
+}
+
+#game-board .cell {
+  border: 5px solid black;
 }
 
 .cell {
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  align-items: center;
   text-align: center;
-  justify-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+#winningMessageText {
+  margin-top: 2rem;
 }
